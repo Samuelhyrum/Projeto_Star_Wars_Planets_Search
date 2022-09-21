@@ -13,7 +13,6 @@ function StarProvider({ children }) {
       return res;
     });
     setData(offResidents);
-    console.log(results);
   };
 
   const StarPlanets = {
