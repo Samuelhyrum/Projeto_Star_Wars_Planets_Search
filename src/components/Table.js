@@ -7,15 +7,23 @@ function Table() {
 
   useEffect(() => {
     getPlanets();
-  });
-  console.log(data);
+  }, []);
+  // console.log(data);
+
+  // const handleChange = ({ target }) => {
+  //   const { name, value } = target;
+  //   setSearch((last) => ({
+  //     ...last,
+  //     [name]: value,
+  //   }));
+  // };
 
   const fil = filterByName.length > 0 ? data.filter((d) => d.name.includes(filterByName))
     : [];
   return (
     <div>
       <input
-        name="search"
+        name="name"
         type="text"
         placeholder="Buscar..."
         data-testid="name-filter"
