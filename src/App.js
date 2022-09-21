@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import Filter from './components/Filter';
+// import FilterByName from './components/FilterByName';
 import Table from './components/Table';
 import StarProvider from './context/StarProvider';
 
@@ -14,6 +16,8 @@ function App() {
           What do you want to see today?
         </h2>
       </header>
+      {/* <FilterByName /> */}
+      <Filter />
       <Table />
     </StarProvider>
   );

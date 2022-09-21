@@ -1,23 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import StarContext from '../context/StarContext';
 
 function Table() {
-  const { data, getPlanets } = useContext(StarContext);
+  const { data, data2 } = useContext(StarContext);
   const { filterByName: { name }, setFilter } = useContext(StarContext);
   const [filterByName, setSearch] = useState('');
 
-  useEffect(() => {
-    getPlanets();
-    // eslint-disable-next-line
-  }, []);
+  const fil = filterByName.length
+  > 0
+    ? data.filter((d) => d.name.toLowerCase().includes(filterByName.toLowerCase()))
+    : data2;
 
   const handleChange = ({ target: { value } }) => {
     setSearch(value);
     setFilter((prev) => ({ ...prev, name: value }));
   };
 
-  const fil = filterByName.length > 0 ? data.filter((d) => d.name.includes(filterByName))
-    : [];
   return (
     <div>
       <input
@@ -26,7 +24,6 @@ function Table() {
         placeholder="Buscar..."
         data-testid="name-filter"
         onChange={ handleChange }
-        // onChange={ (e) => setSearch(e.target.value) }
         value={ name }
       />
       <table>
@@ -48,8 +45,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filterByName.length > 0 ? (
-
+          {
             fil.map((filter, i) => (
               <tr key={ i }>
                 <td>{filter.name}</td>
@@ -67,25 +63,7 @@ function Table() {
                 <td>{filter.url}</td>
               </tr>
             ))
-          ) : (
-            data.map((planet, index) => (
-              <tr key={ index }>
-                <td>{planet.name}</td>
-                <td>{planet.rotation_period}</td>
-                <td>{planet.orbital_period}</td>
-                <td>{planet.climate}</td>
-                <td>{planet.diameter}</td>
-                <td>{planet.gravity}</td>
-                <td>{planet.terrain}</td>
-                <td>{planet.surface_water}</td>
-                <td>{planet.population}</td>
-                <td>{planet.films}</td>
-                <td>{planet.created}</td>
-                <td>{planet.edited}</td>
-                <td>{planet.url}</td>
-              </tr>
-            ))
-          )}
+          }
         </tbody>
       </table>
     </div>
