@@ -7,7 +7,9 @@ function Table() {
 
   useEffect(() => {
     getPlanets();
+    // eslint-disable-next-line
   }, []);
+
   // console.log(data);
 
   // const handleChange = ({ target }) => {
@@ -27,6 +29,7 @@ function Table() {
         type="text"
         placeholder="Buscar..."
         data-testid="name-filter"
+        // onChange={ ha }
         onChange={ (e) => setSearch(e.target.value) }
         value={ filterByName }
       />
