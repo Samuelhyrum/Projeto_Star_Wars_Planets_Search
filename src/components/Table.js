@@ -26,7 +26,7 @@ function Table() {
         onChange={ handleChange }
         value={ name }
       />
-      <table>
+      <table data-testid="table">
         <thead>
           <tr>
             <th>Name</th>

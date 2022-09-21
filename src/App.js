@@ -12,9 +12,9 @@ function App() {
         <h1>
           Welcome to the Home, Sr. of Galaxy!
         </h1>
-        <h2>
+        {/* <h2>
           What do you want to see today?
-        </h2>
+        </h2> */}
       </header>
       {/* <FilterByName /> */}
       <Filter />
