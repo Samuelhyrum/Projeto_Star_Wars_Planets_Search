@@ -11,7 +11,7 @@ describe('Testando Aplicação', () => {
       json: jest.fn().mockResolvedValue(testData)
     }),
     render(<App />)
-    
+
     expect(screen.getAllByRole('row')).toHaveLength(1);
 
     const input = screen.getByTestId('name-filter')
@@ -37,7 +37,7 @@ describe('Testando Aplicação', () => {
 
 
   })
-  it('tests number filters', async () => {
+  it('Testes de multipĺos filtros', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValue(testData),
@@ -47,17 +47,17 @@ describe('Testando Aplicação', () => {
 
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
 
-    const columnFilter = screen.getByTestId('column-filter')
-    expect(columnFilter).toHaveValue('population');
-    const comparisonFilter = screen.getByTestId('comparison-filter');
-    expect(comparisonFilter).toHaveValue('maior que');
-    const valueFilter = screen.getByTestId('value-filter');
-    expect(valueFilter).toBeInTheDocument();
+    const column = screen.getByTestId('column-filter')
+    expect(column).toHaveValue('population');
+    const comparison= screen.getByTestId('comparison-filter');
+    expect(comparison).toHaveValue('maior que');
+    const value = screen.getByTestId('value-filter');
+    expect(value).toBeInTheDocument();
 
-    userEvent.selectOptions(columnFilter, 'diameter');
-    userEvent.selectOptions(comparisonFilter, 'menor que');
-    userEvent.clear(valueFilter)
-    userEvent.type(valueFilter, '8900');
+    userEvent.selectOptions(column, 'diameter');
+    userEvent.selectOptions(comparison, 'menor que');
+    userEvent.clear(value)
+    userEvent.type(value, '8900');
 
     userEvent.click(screen.getByRole('button', { name: 'Filtrar' }))
 })
