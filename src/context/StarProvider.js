@@ -4,6 +4,7 @@ import StarContext from './StarContext';
 
 function StarProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filterByName, setFilter] = useState({ name: '' });
   const endpoint = 'https://swapi.dev/api/planets';
 
   const getPlanets = async () => {
@@ -18,6 +19,8 @@ function StarProvider({ children }) {
   const StarPlanets = {
     data,
     getPlanets,
+    filterByName,
+    setFilter,
   };
   return (
     <StarContext.Provider value={ StarPlanets }>

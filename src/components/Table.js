@@ -3,6 +3,7 @@ import StarContext from '../context/StarContext';
 
 function Table() {
   const { data, getPlanets } = useContext(StarContext);
+  const { filterByName: { name }, setFilter } = useContext(StarContext);
   const [filterByName, setSearch] = useState('');
 
   useEffect(() => {
@@ -10,15 +11,10 @@ function Table() {
     // eslint-disable-next-line
   }, []);
 
-  // console.log(data);
-
-  // const handleChange = ({ target }) => {
-  //   const { name, value } = target;
-  //   setSearch((last) => ({
-  //     ...last,
-  //     [name]: value,
-  //   }));
-  // };
+  const handleChange = ({ target: { value } }) => {
+    setSearch(value);
+    setFilter((prev) => ({ ...prev, name: value }));
+  };
 
   const fil = filterByName.length > 0 ? data.filter((d) => d.name.includes(filterByName))
     : [];
@@ -29,9 +25,9 @@ function Table() {
         type="text"
         placeholder="Buscar..."
         data-testid="name-filter"
-        // onChange={ ha }
-        onChange={ (e) => setSearch(e.target.value) }
-        value={ filterByName }
+        onChange={ handleChange }
+        // onChange={ (e) => setSearch(e.target.value) }
+        value={ name }
       />
       <table>
         <thead>
