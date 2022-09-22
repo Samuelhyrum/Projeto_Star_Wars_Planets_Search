@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
 import StarContext from '../context/StarContext';
+import { columns } from '../context/StarProvider';
 
 function Table() {
-  const { data, data2, filterByNumericValues } = useContext(StarContext);
-  const { filterByName: { name }, setFilter } = useContext(StarContext);
+  const { data, data2, setData2, filterByNumericValues,
+    setFilterByNumericValues } = useContext(StarContext);
+  const { filterByName: { name }, setFilter, setFilterColumn } = useContext(StarContext);
   const [filterByName, setSearch] = useState('');
 
   const fil = filterByName.length
@@ -16,6 +18,23 @@ function Table() {
     setFilter((prev) => ({ ...prev, name: value }));
   };
 
+  const handleDetele = (column) => {
+    setFilterByNumericValues((prev) => (
+      prev.filter((p) => (
+        p.column !== column
+      ))
+    ));
+    setFilterColumn((prev) => (
+      [...prev, column]
+    ));
+    setData2(data);
+  };
+
+  const deleteAllFilters = () => {
+    setFilterByNumericValues([]);
+    setFilterColumn(columns);
+    setData2(data);
+  };
   return (
     <div>
       <input
@@ -28,13 +47,29 @@ function Table() {
       />
       {
         filterByNumericValues.map((filter, i) => (
-          <div key={ i }>
+          <div
+            key={ i }
+            data-testid="filter"
+          >
             <p>{filter.column}</p>
             <p>{filter.comparison}</p>
             <p>{filter.value}</p>
+            <button
+              type="button"
+              onClick={ () => handleDetele(filter.column) }
+            >
+              X
+            </button>
           </div>
         ))
       }
+      <button
+        onClick={ deleteAllFilters }
+        type="button"
+        data-testid="button-remove-filters"
+      >
+        REMOVE ALL FILTERS
+      </button>
       <table data-testid="table">
         <thead>
           <tr>

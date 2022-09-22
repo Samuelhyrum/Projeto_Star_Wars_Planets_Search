@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarContext from './StarContext';
 
+export const columns = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+];
 function StarProvider({ children }) {
-  const columns = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
   const [data, setData] = useState([]);
   const [filterByName, setFilter] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
@@ -61,6 +61,7 @@ function StarProvider({ children }) {
     filterByNumericValues,
     setFilterByNumericValues,
     setData,
+    setData2,
     data2,
     filterColumns,
     setFilterColumn,
