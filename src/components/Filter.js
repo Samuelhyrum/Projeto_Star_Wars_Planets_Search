@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarContext from '../context/StarContext';
 
 function Filter() {
-  const { setFilterByNumericValues } = useContext(StarContext);
+  const { setFilterByNumericValues, filterColumns,
+    setFilterColumn } = useContext(StarContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [values, setValue] = useState(0);
@@ -15,7 +16,16 @@ function Filter() {
     setFilterByNumericValues((prev) => (
       [...prev, { column, comparison, value: values }]
     ));
+    setFilterColumn(filterColumns.filter((deleteColumn) => (
+      deleteColumn !== column
+    )));
   };
+
+  useEffect(() => {
+    setColumn(filterColumns[0]);
+    setComparison('maior que');
+    setValue(0);
+  }, [filterColumns]);
   return (
     <form>
       <label htmlFor="coluna">
@@ -26,11 +36,13 @@ function Filter() {
           data-testid="column-filter"
           onChange={ ({ target: { value } }) => { handleChange(value, setColumn); } }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {
+            filterColumns.map((col, i) => (
+              <option key={ i } value={ col }>
+                {col}
+              </option>
+            ))
+          }
         </select>
       </label>
       <label htmlFor="operador">

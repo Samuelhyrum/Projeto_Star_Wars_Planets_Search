@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarContext from '../context/StarContext';
 
 function Table() {
-  const { data, data2 } = useContext(StarContext);
+  const { data, data2, filterByNumericValues } = useContext(StarContext);
   const { filterByName: { name }, setFilter } = useContext(StarContext);
   const [filterByName, setSearch] = useState('');
 
@@ -26,6 +26,15 @@ function Table() {
         onChange={ handleChange }
         value={ name }
       />
+      {
+        filterByNumericValues.map((filter, i) => (
+          <div key={ i }>
+            <p>{filter.column}</p>
+            <p>{filter.comparison}</p>
+            <p>{filter.value}</p>
+          </div>
+        ))
+      }
       <table data-testid="table">
         <thead>
           <tr>
@@ -51,8 +60,8 @@ function Table() {
                 <td>{filter.name}</td>
                 <td>{filter.rotation_period}</td>
                 <td>{filter.orbital_period}</td>
-                <td>{filter.climate}</td>
                 <td>{filter.diameter}</td>
+                <td>{filter.climate}</td>
                 <td>{filter.gravity}</td>
                 <td>{filter.terrain}</td>
                 <td>{filter.surface_water}</td>

@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import StarContext from './StarContext';
 
 function StarProvider({ children }) {
+  const columns = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
   const [data, setData] = useState([]);
   const [filterByName, setFilter] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [data2, setData2] = useState([]);
+  const [filterColumns, setFilterColumn] = useState(columns);
   const endpoint = 'https://swapi.dev/api/planets';
 
   const getPlanets = async () => {
@@ -46,6 +50,7 @@ function StarProvider({ children }) {
         setData2(filtros);
       }
     });
+    // eslint-disable-next-line
   }, [filterByNumericValues]);
 
   const StarPlanets = {
@@ -57,6 +62,8 @@ function StarProvider({ children }) {
     setFilterByNumericValues,
     setData,
     data2,
+    filterColumns,
+    setFilterColumn,
   };
   return (
     <StarContext.Provider value={ StarPlanets }>
